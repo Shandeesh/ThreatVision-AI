@@ -42,7 +42,11 @@ const checkCorsOrigin = (origin, callback) => {
   if (!origin) return callback(null, true);
   const isAllowed = allowedOrigins.includes(origin) ||
     /^https?:\/\/localhost(:\d+)?$/.test(origin) ||
-    /^https?:\/\/127\.0\.0\.1(:\d+)?$/.test(origin);
+    /^https?:\/\/127\.0\.0\.1(:\d+)?$/.test(origin) ||
+    /\.vercel\.app$/.test(origin) ||
+    /\.loca\.lt$/.test(origin) ||
+    /\.ngrok-free\.app$/.test(origin) ||
+    /\.ngrok\.io$/.test(origin);
   return callback(null, isAllowed);
 };
 
