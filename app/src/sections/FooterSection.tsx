@@ -2,7 +2,6 @@ import { motion } from "framer-motion";
 import {
   Shield,
   Github,
-  Twitter,
   Linkedin,
   Mail,
   ExternalLink,
@@ -121,25 +120,23 @@ export default function FooterSection() {
             </p>
             <div className="flex items-center gap-3">
               <a
-                href="#"
+                href="https://github.com/Shandeesh"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="p-2 rounded-lg glass text-slate-400 hover:text-cyan-400 hover:border-cyan-500/30 transition-colors"
               >
                 <Github className="w-5 h-5" />
               </a>
               <a
-                href="#"
-                className="p-2 rounded-lg glass text-slate-400 hover:text-cyan-400 hover:border-cyan-500/30 transition-colors"
-              >
-                <Twitter className="w-5 h-5" />
-              </a>
-              <a
-                href="#"
+                href="https://www.linkedin.com/in/shandeesh-r-p-926538303?utm_source=share_via&utm_content=profile&utm_medium=member_android"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="p-2 rounded-lg glass text-slate-400 hover:text-cyan-400 hover:border-cyan-500/30 transition-colors"
               >
                 <Linkedin className="w-5 h-5" />
               </a>
               <a
-                href="#"
+                href="mailto:shandeeshrp10@gmail.com"
                 className="p-2 rounded-lg glass text-slate-400 hover:text-cyan-400 hover:border-cyan-500/30 transition-colors"
               >
                 <Mail className="w-5 h-5" />

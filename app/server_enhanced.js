@@ -1,4 +1,4 @@
-﻿
+
 import express from 'express';
 import { createServer } from 'http';
 import { Server } from 'socket.io';
@@ -30,14 +30,31 @@ const config = {
   autoBlockDurationMinutes: Math.max(Number(process.env.AUTO_BLOCK_DURATION_MINUTES || 1440), 1),
 };
 
+const allowedOrigins = [
+  'http://localhost:5173',
+  'http://127.0.0.1:5173',
+  'http://localhost:3000',
+  'http://127.0.0.1:3000',
+  config.clientOrigin,
+].filter(Boolean);
+
+const checkCorsOrigin = (origin, callback) => {
+  if (!origin) return callback(null, true);
+  const isAllowed = allowedOrigins.includes(origin) ||
+    /^https?:\/\/localhost(:\d+)?$/.test(origin) ||
+    /^https?:\/\/127\.0\.0\.1(:\d+)?$/.test(origin);
+  return callback(null, isAllowed);
+};
+
 const app = express();
-app.use(cors({ origin: config.clientOrigin, methods: ['GET', 'POST', 'PUT'] }));
+app.use(cors({ origin: checkCorsOrigin, methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], credentials: true }));
 app.use(express.json({ limit: '1mb' }));
 
 const httpServer = createServer(app);
 const io = new Server(httpServer, {
-  cors: { origin: config.clientOrigin, methods: ['GET', 'POST'] },
+  cors: { origin: checkCorsOrigin, methods: ['GET', 'POST'] },
 });
+
 
 const statePath = path.join(__dirname, 'live_state.json');
 let state;
