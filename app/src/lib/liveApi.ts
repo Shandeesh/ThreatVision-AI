@@ -1,8 +1,11 @@
-﻿import axios from "axios";
+import axios from "axios";
 import { io } from "socket.io-client";
 
 const fallbackApiUrl = ["http://localhost", "3001"].join(":");
-export const API_URL = import.meta.env.VITE_API_URL || fallbackApiUrl;
+const isLocal = typeof window !== "undefined" && 
+  (window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1");
+
+export const API_URL = import.meta.env.VITE_API_URL || (isLocal ? fallbackApiUrl : "");
 
 export const api = axios.create({
   baseURL: API_URL,

@@ -305,7 +305,11 @@ function loadState() {
 }
 
 function saveState() {
-  fs.writeFileSync(statePath, JSON.stringify(state, null, 2));
+  try {
+    fs.writeFileSync(statePath, JSON.stringify(state, null, 2));
+  } catch (error) {
+    console.warn('Unable to write state file (expected in read-only environments like Vercel):', error.message);
+  }
 }
 
 function addFirewallAction(action) {
@@ -1113,7 +1117,11 @@ metrics = new MetricsService();
 ids = new IDSService();
 packetCapture = new PacketCaptureService();
 
-httpServer.listen(config.port, () => {
-  console.log(`ThreatVision live backend listening on port ${config.port}`);
-  console.log(`Allowed client origin: ${config.clientOrigin}`);
-});
+if (!process.env.VERCEL) {
+  httpServer.listen(config.port, () => {
+    console.log(`ThreatVision live backend listening on port ${config.port}`);
+    console.log(`Allowed client origin: ${config.clientOrigin}`);
+  });
+}
+
+export default app;
